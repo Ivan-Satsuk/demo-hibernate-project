@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ConsumerServic {
+public class ConsumerService {
 
 
     public void boughtGoods(String consumer) {
@@ -50,14 +50,13 @@ public class ConsumerServic {
     public void buy_a_Good() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter consumer's name and good name");
+
         if (scanner.hasNext() & scanner.hasNext()) {
             String consumer = scanner.next();
-//            System.out.println("Enter name of a good");
-//            if(scanner.hasNext()) {
             String good = scanner.next();
             Session session = HibSessionFactory.getSessionFactory().openSession();
             Transaction r = session.beginTransaction();
-//
+
             Criteria c = session.createCriteria(Consumer.class);
             c.add(Restrictions.eq("name", consumer));
             Consumer c1 = (Consumer) c.uniqueResult();
@@ -72,12 +71,8 @@ public class ConsumerServic {
 
             c1.getGoodsInfo().add(gof1);
 
-            //session.createNativeQuery(("update purchase_history set price="+g1.getPrice()+" where good_id="+g1.getId()+";")).executeUpdate();
-
             r.commit();
             session.close();
-            System.out.println(consumer + " bought " + good);
-//            }
         }
     }
 
@@ -112,6 +107,7 @@ public class ConsumerServic {
             Criteria c2 = session.createCriteria(Good.class);
             c2.add(Restrictions.eq("name", good));
             Good g1 = (Good) c2.uniqueResult();
+
             session.delete(g1);
             System.out.println(good + " was deleted successfully");
 
